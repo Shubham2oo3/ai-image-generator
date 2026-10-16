@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Google Imagen 3 AI Image Generator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <!-- Top Bar -->
+    <div class="top-nav">
+      <div class="model-badge" id="modelStatusBadge">
+        <span class="badge-dot"></span>
+        <span id="modelStatusText">Google Imagen 3</span>
+      </div>
+
+      <button id="openSettingsBtn" class="settings-btn" title="Google Gemini API Key">
+        ⚙️ Google API Key
+      </button>
+    </div>
+
+    <header>
+      <h1>Google Imagen 3 AI Generator 🎨</h1>
+      <p>High-fidelity, single-image generation powered by Google DeepMind's Imagen 3 model</p>
+    </header>
+
+    <main>
+      <!-- Style Selector Chips -->
+      <div class="style-chips-wrapper">
+        <span class="chips-title">Style:</span>
+        <div class="style-chips" id="styleChips">
+          <button class="style-chip active" data-style="none">Original</button>
+          <button class="style-chip" data-style="photorealistic, 8k resolution, highly detailed photography, natural lighting">📸 Photorealistic</button>
+          <button class="style-chip" data-style="cinematic lighting, dramatic atmosphere, 35mm film photograph, masterpiece">🎬 Cinematic</button>
+          <button class="style-chip" data-style="historical architecture, authentic Indian cultural heritage, majestic detail">🏰 Heritage & Landmark</button>
+          <button class="style-chip" data-style="cyberpunk neon, glowing city lights, futuristic aesthetic, 8k">⚡ Cyberpunk</button>
+          <button class="style-chip" data-style="vibrant anime artwork, Makoto Shinkai aesthetic, rich colors">🎌 Anime</button>
+        </div>
+      </div>
+
+      <!-- Controls Row: Aspect Ratio & Optimizer -->
+      <div class="controls-row">
+        <div class="control-item">
+          <label for="aspectRatioSelect">Aspect Ratio:</label>
+          <select id="aspectRatioSelect">
+            <option value="1:1" selected>🔲 1:1 Square</option>
+            <option value="16:9">🖼️ 16:9 Landscape</option>
+            <option value="9:16">📱 9:16 Portrait</option>
+            <option value="4:3">📺 4:3 Standard</option>
+          </select>
+        </div>
+
+        <div class="control-checkbox-item">
+          <input type="checkbox" id="enhancePromptCheck" checked />
+          <label for="enhancePromptCheck" title="Uses Gemini to enhance prompt details">
+            ✨ Gemini Prompt Optimizer
+          </label>
+        </div>
+      </div>
+
+      <!-- Prompt Input -->
+      <div class="input-section">
+        <input
+          type="text"
+          id="promptInput"
+          placeholder="e.g., A majestic sunset at Sinhagad fort, Pune, golden hour clouds, cinematic 8k"
+          aria-label="Image prompt"
+        />
+        <button id="generateBtn">Generate Image</button>
+      </div>
+
+      <p id="errorMessage" class="error hidden"></p>
+
+      <!-- Single Image Hero Display Area -->
+      <div class="display-section">
+        <div id="loading" class="loading hidden">
+          <div class="spinner"></div>
+          <p id="loadingStatusText">Generating your image...</p>
+        </div>
+
+        <div id="singleImageContainer" class="single-image-wrapper hidden">
+          <div class="single-image-frame" id="imageFrame">
+            <img id="singleGeneratedImage" alt="AI Generated Image" />
+            <div class="image-overlay-bar">
+              <button id="viewFullscreenBtn" class="action-btn" title="View Fullscreen">🔍 Full View</button>
+              <button id="downloadBtn" class="action-btn download-highlight" title="Download Image">⬇️ Save Image</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Prompt Details Banner -->
+      <div id="promptDetailBox" class="prompt-detail-box hidden">
+        <span class="detail-label">Prompt:</span>
+        <p id="finalPromptText" class="detail-text"></p>
+      </div>
+    </main>
+
+    <footer>
+      <p>Google Imagen 3 API • Single Clean Generation • No Rate Limits</p>
+    </footer>
+  </div>
+
+  <!-- Settings Modal for Gemini Key -->
+  <div id="settingsModal" class="settings-modal hidden">
+    <div class="settings-overlay" id="settingsOverlay"></div>
+    <div class="settings-box">
+      <div class="settings-header">
+        <h3>⚙️ Google Gemini / Imagen 3 API Key</h3>
+        <button class="modal-close-btn" id="closeSettingsBtn">&times;</button>
+      </div>
+
+      <div class="settings-body">
+        <p class="settings-desc">
+          Get your <strong>Free Gemini API Key</strong> from Google AI Studio in 1 click:
+          <br />
+          🔗 <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener"><strong>https://aistudio.google.com/app/apikey</strong></a>
+        </p>
+
+        <div class="input-field-group">
+          <label for="geminiKeyInput">Paste your Gemini API Key:</label>
+          <input 
+            type="password" 
+            id="geminiKeyInput" 
+            placeholder="AIzaSy..." 
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="settings-actions">
+          <button id="saveKeyBtn" class="primary-modal-btn">Save Key</button>
+          <button id="clearKeyBtn" class="secondary-modal-btn">Clear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div id="lightboxModal" class="lightbox-modal hidden">
+    <div class="lightbox-overlay" id="lightboxOverlay"></div>
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightboxClose">&times;</button>
+      <img id="lightboxImage" src="" alt="Full view" />
+      <div class="lightbox-actions">
+        <button id="lightboxDownloadBtn" class="download-action-btn">⬇️ Download High-Res JPEG</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
